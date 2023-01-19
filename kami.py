@@ -19,16 +19,16 @@ prefix = "x"
 time = datetime.now(pytz.timezone('EST'))
 class Config:
     token = ""
-    help_list = {"List of help commands (This)": f"{prefix}help",
-    "Infomation of my discord and kami account": f"{prefix}myinfo",
-    "Register a kami account": f"{prefix}register",
-    "Geo Location": f"{prefix}geo <ip_address>",
-    "Port Scanner": f"{prefix}pscan <ip_address>",
-    "Domain Up or Down Status": f"{prefix}urlup <url>",
-    "Account DB Lookup": f"{prefix}db <username|email|firstname|lastname|phone#>",
-    "Stresser": f"{prefix}bbos <ip_address> <port> <time> <method>",
-    "List of stresser plans": f"{prefix}prices",
-    "About Kami": f"{prefix}kami"}
+    help_list = {"List of help commands (This) [DONE]": f"{prefix}help",
+    "Infomation of my discord and kami account [DONE]": f"{prefix}myinfo",
+    "Register a kami account [DONE]": f"{prefix}register",
+    "Geo Location [DONE]": f"{prefix}geo <ip_address>",
+    "Port Scanner [DONE]": f"{prefix}pscan <ip_address>",
+    "Domain Up or Down Status [LAST_TASK]": f"{prefix}urlup <url>",
+    "Account DB Lookup [LAST_TASK]": f"{prefix}db <username|email|firstname|lastname|phone#>",
+    "Stresser [NEEDED]": f"{prefix}bbos <ip_address> <port> <time> <method>",
+    "List of stresser plans [NEEDED]": f"{prefix}prices",
+    "About Kami [NEEDED]": f"{prefix}kami"}
     
 
 class MyClient(discord.Client):
@@ -58,8 +58,9 @@ class MyClient(discord.Client):
             return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Register", f"You have succesfully register a kami account! <@{message.author.id}>", {}), False)
 
         elif msg == f"{prefix}myinfo":
-
-            if kami_account.userid == f"{message.author.id}": # No KAMI Account
+            print(kami_account.userid)
+            print(message.author.id)
+            if f"{kami_account.userid}" == "": # No KAMI Account
                 return await DiscordUtilities.embed(message, setEmbedInfo("Kami | My Info", "Information of your discord and Kami account!", {"Discord Tag:": f"{message.author}", "Username:": f"{message.author.name}", "UserID:": f"{message.author.id}", "Kami Account": "You are not registered with kami!"}),  False)
             
             return await DiscordUtilities.embed(message, setEmbedInfo("Kami | My Info", "Information of your discord and Kami account!", {"Discord Tag:": f"{message.author}", "Username:": f"{message.author.name}", "UserID:": f"{message.author.id}", "Max Concurrents:": kami_account.max_con, "Max Time:": kami_account.max_time, "Mod Level:": kami_account.mod_level}), False)
@@ -97,4 +98,4 @@ class MyClient(discord.Client):
 intents = discord.Intents.default()
 intents.message_content = True
 client = MyClient(intents=intents)
-client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.GQy_MG.zEg4zuGbJu_2Ggx7L4GPMV0Pg0IlKjeNKxcQC8')
+client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.GIs3C0.Yt9C6y2KIBr-NrZ9w2XAQ7ZRIRs9d0V-mLJZOI')

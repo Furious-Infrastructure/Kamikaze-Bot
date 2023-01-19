@@ -48,9 +48,12 @@ class User():
 
     def find(self, uid: str) -> UserInfo:
         n = UserInfo
-        for line in self.__retrieveDB().split("\n"):
-            if len(line) < 1: break
+        users = self.__retrieveDB().split("\n")
+        for line in users:
+            print(line)
+            if line == "": break
             parsed = self.__parseLine(line)
+            print(parsed)
             if len(parsed) > 2:
                 if parsed[1].strip() == uid:
                     n = setInfo(parsed[0], parsed[1], int(parsed[2]), int(parsed[3]), int(parsed[4]), int(parsed[5]))
