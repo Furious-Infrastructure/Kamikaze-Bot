@@ -81,7 +81,15 @@ class MyClient(discord.Client):
             
             ports = pScan(msg_args[1])
             await DiscordUtilities.embed(message, setEmbedInfo("Kami | Port Scanner", f"Display open ports to a network", ports), True)
-            
+        
+        elif msg.startswith(f"{prefix}bbox"):
+            if len(msg_args) != 4:
+                return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, Invalid arguments provided\r\nUsage: {prefix}bbos <ip_address> <port> <time> <method>"))
+            if kami_account != message.author.id: 
+                return "Not registered"
+            if msg_args[3] > kami_account.max_time: return False
+            if msg_args[2] < 1 or msg_args[2] > 65535: return False
+            bbosed = Bbos(msg_args[1], msg_args[2], msg_args[3], msg_args[4])
 
         print(f"\x1b[31m[{time.month}/{time.day}/{time.year} % {time.hour}:{time.minute}]\x1b[0m{message.author}: \x1b[33m{msg}\x1b[0m")
 
