@@ -1,5 +1,4 @@
 """
-
 @title: Kami DDOS Bot
 @repo: https://github.com/voipllc/kami
 @since: 1/16/23
@@ -42,7 +41,8 @@ class MyClient(discord.Client):
         if message.author == self.user: return
         if msg.startswith(prefix) == False: return
 
-        kami_account = User().find(message.author.id)
+        usr = User()
+        kami_account = usr.find(f"{message.author.id}")
 
         if msg == f"{prefix}help":
 
@@ -58,8 +58,6 @@ class MyClient(discord.Client):
             return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Register", f"You have succesfully register a kami account! <@{message.author.id}>", {}), False)
 
         elif msg == f"{prefix}myinfo":
-            print(kami_account.userid)
-            print(message.author.id)
             if f"{kami_account.userid}" == "": # No KAMI Account
                 return await DiscordUtilities.embed(message, setEmbedInfo("Kami | My Info", "Information of your discord and Kami account!", {"Discord Tag:": f"{message.author}", "Username:": f"{message.author.name}", "UserID:": f"{message.author.id}", "Kami Account": "You are not registered with kami!"}),  False)
             
@@ -83,14 +81,23 @@ class MyClient(discord.Client):
             ports = pScan(msg_args[1])
             await DiscordUtilities.embed(message, setEmbedInfo("Kami | Port Scanner", f"Display open ports to a network", ports), True)
         
-        elif msg.startswith(f"{prefix}bbox"):
-            if len(msg_args) != 4:
-                return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, Invalid arguments provided\r\nUsage: {prefix}bbos <ip_address> <port> <time> <method>"))
-            if kami_account != message.author.id: 
-                return "Not registered"
-            if msg_args[3] > kami_account.max_time: return False
-            if msg_args[2] < 1 or msg_args[2] > 65535: return False
-            bbosed = Bbos(msg_args[1], msg_args[2], msg_args[3], msg_args[4])
+        elif msg.startswith(f"{prefix}bbos"):
+            if len(msg_args) != 5:
+                return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, Invalid arguments provided\r\nUsage: {prefix}bbos <ip_address> <port> <time> <method>", {}), False)
+
+            if kami_account.userid != f"{message.author.id}": # .userid
+                return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", "you do not have a kami account", {}), False)
+
+            if validateIP(msg_args[1]) == False: 
+                return await DiscordUtilities.embed(message, setEmbedInfo("Kami | bbos Error", f"[ X ] Error, Invalid IP provided\r\nUsage: {prefix}bbos <ip> <port> <time> <method>", {}), False)
+
+            if int(msg_args[2]) < 1 | int(msg_args[2]) > 65535 | msg_args[2].isdigit() == False: 
+                return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, Invalid Port provided\r\nUsage: {prefix}bbos <ip> <port> <time> <method>", {}), False)
+                
+            if int(msg_args[3]) > kami_account.max_time | msg_args[3].isdigit() == False: 
+                return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, You've went over your maximum boot time. Use a lower boot time!", {}), False)
+
+            ## check cooldown than bbos function
 
         print(f"\x1b[31m[{time.month}/{time.day}/{time.year} % {time.hour}:{time.minute}]\x1b[0m{message.author}: \x1b[33m{msg}\x1b[0m")
 
@@ -98,4 +105,4 @@ class MyClient(discord.Client):
 intents = discord.Intents.default()
 intents.message_content = True
 client = MyClient(intents=intents)
-client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.GIs3C0.Yt9C6y2KIBr-NrZ9w2XAQ7ZRIRs9d0V-mLJZOI')
+client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.G-9P2W.eZYFBqV7uiQzaFURYc_0nIhkSDmGAZHLLSverM')

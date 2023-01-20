@@ -58,7 +58,7 @@ def pScan(ip: str) -> dict:
     if not validateIP(ip): return {}
     print("[ + ] Processing....")
 
-    results = subprocess.getoutput(f"nmap {ip} -Pn")
+    results = subprocess.getoutput(f"nmap {ip}")
     lines = results.split("\n")
 
     print("[ + ] Finished nmap, filtering response....")
@@ -74,7 +74,8 @@ def pScan(ip: str) -> dict:
     print("[ + ] Returning response....")
     return nmap
 
-def validateIP(ip: str): 
+def validateIP(ip: str) -> bool: 
+    if len(ip.split(".")) != 4: return False
     for i in ip.split("."): 
         if int(i) < 1 | int(i) > 255: return False
     return True

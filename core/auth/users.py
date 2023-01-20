@@ -48,22 +48,23 @@ class User():
 
     def find(self, uid: str) -> UserInfo:
         n = UserInfo
-        users = self.__retrieveDB().split("\n")
+        usrs = open("assets/users.db", "r")
+        users = usrs.read().split("\n")
+
         for line in users:
-            print(line)
             if line == "": break
             parsed = self.__parseLine(line)
-            print(parsed)
+            
             if len(parsed) > 2:
-                if parsed[1].strip() == uid:
+                if str(parsed[1].strip()) == uid:
                     n = setInfo(parsed[0], parsed[1], int(parsed[2]), int(parsed[3]), int(parsed[4]), int(parsed[5]))
-                    return setInfo("", "", 0, 0, 0, 0)
+                    return n
         return setInfo("", "", 0, 0, 0, 0)
 
     def add(self, info: UserInfo) -> bool:
         try:
             dbFile = open(self.dbpath, "a")
-            dbFile.write(f"('{info.username}'.'{info.userid}'.'{info.max_con}','{info.max_time}','{info.cooldown}','{info.mod_level}')\n")
+            dbFile.write(f"('{info.username}','{info.userid}','{info.max_con}','{info.max_time}','{info.cooldown}','{info.mod_level}')\n")
             dbFile.close()
         except:
             return False
