@@ -1,0 +1,10 @@
+{
+    "API_1": {
+        "use": false,
+        "url": "http://your_api.com/api.php?key=[KEY]&host=[HOST]&port=[PORT]&time=[TIME]&method=[METHOD]",
+        "max_time": 0,
+        "max_boot": 0,
+        "methods": ["UDP", "TCP"],
+        "cooldown": 0
+    }
+}
