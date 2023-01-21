@@ -79,6 +79,3 @@ def validateIP(ip: str) -> bool:
     for i in ip.split("."): 
         if int(i) < 1 | int(i) > 255: return False
     return True
-
-def Bbos(ip: str, port: int, time: int, method: str, id: int) -> bool:
-    pass #poopdee scoop
