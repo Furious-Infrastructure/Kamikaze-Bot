@@ -27,7 +27,7 @@ class Config:
     "Stresser [NEEDED]": f"{prefix}bbos <ip_address> <port> <time> <method>",
     "List of stresser plans [NEEDED]": f"{prefix}prices",
     "About Kami [NEEDED]": f"{prefix}kami"}
-    
+
 
 class MyClient(discord.Client):
     async def on_ready(self):
