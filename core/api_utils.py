@@ -40,7 +40,7 @@ def setAttackInfo(ip: str, p: int, t: int, m: str) -> Attack_Info:
 
 class API():
     apis_found: list[API_Info]
-    api_responses: list[str]
+    api_responses: dict
 
     def __init__(self, m: str) -> None:
         self.apis_found = []
@@ -88,21 +88,21 @@ class API():
         if len(responses) > 0: return True
         return False
 
-    def _parseResponses(self, r: list, apis: list[API_Info]) -> list[str]:
-        new_resp = []
+    def _parseResponses(self, r: list, apis: list[API_Info]) -> dict:
+        new_resp = {}
         i=0
         for resp in r:
             # Check to see if the API response is json syntax
             if "attack" in resp and "launched" in resp:
-                new_resp.append(f"[ + ] Attack has successfully sent to {apis[i].name}")
+                new_resp[apis[i].name] = f"[ + ] Attack has successfully sent to {apis[i].name}"
             if "invalid" in resp and "key" in resp:
-                new_resp.append(f"[ X ] Error, Unable to send an attack to an API due to key on {apis[i].name}. Please report this issue to the net owner!")
+                new_resp[apis[i].name] = f"[ X ] Error, Unable to send an attack to an API due to key on {apis[i].name}. Please report this issue to the net owner!"
             elif "invalid" in resp and "time" in resp:
-                new_resp.append(f"[ X ] Error, Unable to send an attack to an API due to attack time on {apis[i].name}. Please report this issue to the net owner!")
+                new_resp[apis[i].name] = f"[ X ] Error, Unable to send an attack to an API due to attack time on {apis[i].name}. Please report this issue to the net owner!"
             elif "invalid" in resp and "port" in resp:
-                new_resp.append(f"[ X ] Error, Unable to send an attack to an API due to attack port on {apis[i].name}. Please report this issue to the net owner!")
+                new_resp[apis[i].name] = f"[ X ] Error, Unable to send an attack to an API due to attack port on {apis[i].name}. Please report this issue to the net owner!"
             elif "invalid" in resp and "ip" in resp:
-                new_resp.append(f"[ X ] Error, Unable to send an attack to an API due to attack ip on {apis[i].name}. Please report this issue to the net owner!")
+                new_resp[apis[i].name] = f"[ X ] Error, Unable to send an attack to an API due to attack ip on {apis[i].name}. Please report this issue to the net owner!"
             i+=1
 
         return new_resp
@@ -120,11 +120,11 @@ class API():
     def get_apis(self) -> list[API_Info]:
         return self.apis_found
 
-    def get_responses(self) -> list[str]:
+    def get_responses(self) -> dict:
         return self.api_responses
 
-def validateIP(ip: str) -> bool: 
-    if len(ip.split(".")) != 4: return False
+def validateIP(ip: str):
+    if len(ip) < 1: return False
     for i in ip.split("."): 
         if int(i) < 1 | int(i) > 255: return False
     return True

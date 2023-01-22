@@ -1,0 +1,21 @@
+{
+    "Basic": {
+        "maxtime": 300,
+        "concurrents": 1,
+        "cooldown": 60,
+        "price": 20
+    },
+    "Standard": {
+        "Maxtime": 600,
+        "Concurrents": 2,
+        "Cooldown": 40,
+        "prices": 40
+    },
+    "VIP": {
+        "maxtime": 1200,
+        "raw_maxtime": 300,
+        "concurrents": 3,
+        "Cooldowm": 20,
+        "prices": 60
+    }
+}

