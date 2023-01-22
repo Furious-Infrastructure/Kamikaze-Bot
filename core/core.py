@@ -22,4 +22,4 @@ class Plans:
         self.premium_raw_maxtime = self.premium_plan["raw_maxtime"]
         self.premium_cons = self.premium_plan["concurrents"]
         self.premium_cooldown = self.premium_plan["Cooldowm"]
-        self.premium_price = self.data["prices"]
+        self.premium_price = self.premium_plan["prices"]
