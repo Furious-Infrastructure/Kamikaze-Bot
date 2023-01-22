@@ -58,7 +58,9 @@ class User():
             if len(parsed) > 2:
                 if str(parsed[1].strip()) == uid:
                     n = setInfo(parsed[0], parsed[1], int(parsed[2]), int(parsed[3]), int(parsed[4]), int(parsed[5]))
+                    usrs.close()
                     return n
+        usrs.close()
         return setInfo("", "", 0, 0, 0, 0)
 
     def add(self, info: UserInfo) -> bool:

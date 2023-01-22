@@ -5,16 +5,17 @@
 @author: vZy/Nefarious
 @author_github: https://github.com/NefariousTheDev
 """
-import discord, pytz
-from datetime import datetime
+import discord, pytz, time
+# from datetime import datetime
 
 from core.discord import *
 from core.auth.users import *
 from core.tools import *
 from core.api_utils import *
+from core.plan_utils import *
 
 prefix = "x"
-time = datetime.now(pytz.timezone('EST'))
+current_time = "GANG_GANG" # datetime.now(pytz.timezone('EST'))
 class Config:
     token = ""
     help_list = {"List of help commands (This) [DONE]": f"{prefix}help",
@@ -106,10 +107,23 @@ class MyClient(discord.Client):
 
             return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Attack Status", f"Attack {msg_args[1]}:{msg_args[2]} for {msg_args[3]} seconds with {msg_args[4]} sent to {api_count} APIs...", a.get_responses()), False)
 
-        print(f"\x1b[31m[{time.month}/{time.day}/{time.year} % {time.hour}:{time.minute}]\x1b[0m{message.author}: \x1b[33m{msg}\x1b[0m")
+        elif msg.startswith(f"{prefix}prices"):
+            plans = Plans()
+            for plan in plans.get_plans():
+                new_dict = {}
+                new_dict['Max Time'] = plan.maxtime
+                new_dict['Raw Max Time'] = plan.raw_maxtime
+                new_dict['Concurrents'] = plan.concurrents
+                new_dict['Cooldown'] = plan.cooldown
+                new_dict['Price'] = plan.price
+                await DiscordUtilities.embed(message, setEmbedInfo(f"Kami | Prices", f"Plan: {plan.name}", new_dict), False)
+                time.sleep(0.50)
+
+        # print(f"\x1b[31m[{current_time.month}/{current_time.day}/{current_time.year} % {current_time.hour}:{current_time.minute}]\x1b[0m{message.author}: \x1b[33m{msg}\x1b[0m")
+        print(f"\x1b[31m{message.author}: \x1b[33m{msg}\x1b[0m")
 
 
 intents = discord.Intents.default()
 intents.message_content = True
 client = MyClient(intents=intents)
-client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.GDmQpr.e485sVdsIZoSFLTBUCTKKYKbv2zxWhLxNt0eo0')
+client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.G7bbo2.ArqMrIaI4QbICo5s91dl6RaAqTXrbkDZdngkhg')
