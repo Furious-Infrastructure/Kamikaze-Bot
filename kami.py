@@ -1,6 +1,6 @@
 """
 @title: Kami DDOS Bot
-@repo: https://github.com/voipllc/kami
+@repo: https://github.com/NefariousTheDev/Kami-Bot
 @since: 1/16/23
 @author: vZy/Nefarious
 @author_github: https://github.com/NefariousTheDev
@@ -112,4 +112,4 @@ class MyClient(discord.Client):
 intents = discord.Intents.default()
 intents.message_content = True
 client = MyClient(intents=intents)
-client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.GtsBPl.gAjW-N95rdprYrhb2yKWAEHdBg-iekRXXR2R3g')
+client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.GDmQpr.e485sVdsIZoSFLTBUCTKKYKbv2zxWhLxNt0eo0')
