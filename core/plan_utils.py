@@ -58,12 +58,14 @@ class Plans():
     
     def find_plan(self, name_or_num: str|int) -> Plan_Info:
         if type(name_or_num) == str:
-            return self.__plans_found[name_or_num]
+            for structure in self.data:
+                if structure == name_or_num:
+                    return setPlanInfo(structure, self.data[structure]['maxtime'], self.data[structure]['raw_maxtime'], self.data[structure]['concurrents'], self.data[structure]['cooldown'], self.data[structure]['price'])
         elif type(name_or_num) == int:
             c = 0
             for structure in self.data:
                 if c == name_or_num:
-                    return setPlanInfo(structure, self.data[structure]['maxtime'], self.data[structure]['raw_maxtime'], self.data[structure]['concurrent'], self.data[structure]['cooldown'], self.data[structure]['price'])
+                    return setPlanInfo(structure, self.data[structure]['maxtime'], self.data[structure]['raw_maxtime'], self.data[structure]['concurrents'], self.data[structure]['cooldown'], self.data[structure]['price'])
                 c+=1
 
         return setPlanInfo("", 0, 0, 0, 0, 0)

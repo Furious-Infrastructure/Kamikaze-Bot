@@ -61,7 +61,7 @@ class MyClient(discord.Client):
             if f"{kami_account.userid}" == "": # No KAMI Account
                 return await DiscordUtilities.embed(message, setEmbedInfo("Kami | My Info", "Information of your discord and Kami account!", {"Discord Tag:": f"{message.author}", "Username:": f"{message.author.name}", "UserID:": f"{message.author.id}", "Kami Account": "You are not registered with kami!"}),  False)
             
-            return await DiscordUtilities.embed(message, setEmbedInfo("Kami | My Info", "Information of your discord and Kami account!", {"Discord Tag:": f"{message.author}", "Username:": f"{message.author.name}", "UserID:": f"{message.author.id}", "Max Concurrents:": kami_account.max_con, "Max Time:": kami_account.max_time, "Mod Level:": kami_account.mod_level}), False)
+            return await DiscordUtilities.embed(message, setEmbedInfo("Kami | My Info", "Information of your discord and Kami account!", {"Discord Tag:": f"{message.author}", "Username:": f"{message.author.name}", "UserID:": f"{message.author.id}", "Max Concurrents:": kami_account.max_con, "Max Time:": kami_account.max_time, "Mod Level:": kami_account.rank}), False)
         
         elif msg.startswith(f"{prefix}geo"):
             if len(msg_args) != 2: 
@@ -82,8 +82,8 @@ class MyClient(discord.Client):
             await DiscordUtilities.embed(message, setEmbedInfo("Kami | Port Scanner", f"Display open ports to a network", ports), True)
         
         elif msg.startswith(f"{prefix}bbos"):
-            if message.author.id != 1061877346153541732: return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", "[ X ] Error, You do not have premium to use this commands!", {}), False)
-            if len(msg_args) != 5:
+            if kami_account.rank == 0: return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", "[ X ] Error, You do not have premium to use this commands!", {}), False)
+            if len(msg_args) != 6:
                 return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, Invalid arguments provided\r\nUsage: {prefix}bbos <ip_address> <port> <time> <method>", {}), False)
 
             if kami_account.userid != f"{message.author.id}": # .userid
@@ -98,7 +98,7 @@ class MyClient(discord.Client):
             if int(msg_args[3]) > kami_account.max_time | msg_args[3].isdigit() == False: 
                 return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, You've went over your maximum boot time. Use a lower boot time!", {}), False)
 
-            a = API(msg_args[4])
+            a = API(msg_args[5])
             if not a.check_for_apis():
                 return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Bbos Error", f"[ X ] Error, We do not have an API with this method!", {}), False)
             
@@ -116,8 +116,36 @@ class MyClient(discord.Client):
                 new_dict['Concurrents'] = plan.concurrents
                 new_dict['Cooldown'] = plan.cooldown
                 new_dict['Price'] = plan.price
-                await DiscordUtilities.embed(message, setEmbedInfo(f"Kami | Prices", f"Plan: {plan.name}", new_dict), False)
+                await DiscordUtilities.embed(message, setEmbedInfo(f"Kami | Prices", f"Plan: {plan.name}", new_dict), True)
                 time.sleep(0.50)
+
+        elif msg.startswith(f"{prefix}access"):
+            """
+                xaccess <user> <plan>
+            """
+            plans = Plans()
+            u = User()
+            if len(msg_args) != 3: return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Access Error", f"[ X ] Error, Invalid argument provided\r\nUsage: {prefix}access <@/user> <plan_number_or_name>", {}), False)
+            if kami_account.rank > 50:
+                u_info = u.find(msg_args[1])
+                p_info = plans.find_plan(msg_args[2])
+
+                # if isinstance(msg_args[1], int): 
+                
+
+                u.update(msg_args[1].replace("<@", "").replace(">", ""), setInfo(u_info.username, u_info.userid, p_info.concurrents, p_info.maxtime, p_info.cooldown, 1))
+
+        elif msg.startswith(f"{prefix}chpfx"):
+            if len(msg_args) != 2: return await DiscordUtilities.embed(message, setEmbedInfo("Kami | Change Prefix Error", f"[ X ] Error, Invalid arguments provided\r\nUsage: {prefix}chpfx <new_prefix>", {}), False)
+            DiscordUtilities.embed(message, setEmbedInfo("Kami | Change Prefix", f"Prefix successfully changed to {msg_args[1]}", {}), False)
+
+
+
+            
+
+
+
+            
 
         # print(f"\x1b[31m[{current_time.month}/{current_time.day}/{current_time.year} % {current_time.hour}:{current_time.minute}]\x1b[0m{message.author}: \x1b[33m{msg}\x1b[0m")
         print(f"\x1b[31m{message.author}: \x1b[33m{msg}\x1b[0m")
@@ -126,4 +154,4 @@ class MyClient(discord.Client):
 intents = discord.Intents.default()
 intents.message_content = True
 client = MyClient(intents=intents)
-client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.G7bbo2.ArqMrIaI4QbICo5s91dl6RaAqTXrbkDZdngkhg')
+client.run('MTA2NTE2NzA3MDUyMzgyNjE5OA.GIFGyG.VjriKvPz3us1uJhTgf6FTjVWWWvZxM2x6kK5PY')

